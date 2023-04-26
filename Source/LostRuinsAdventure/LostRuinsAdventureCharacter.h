@@ -39,7 +39,6 @@ class ALostRuinsAdventureCharacter : public ACharacter
 
 public:
 	ALostRuinsAdventureCharacter();
-	
 
 protected:
 
@@ -62,5 +61,28 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnPlayerHealthChanged();
+
+	UFUNCTION(BlueprintCallable)
+	void HandleHitFX();
+
+private:
+	UFUNCTION()
+	void HandleDeath();
+
+private:
+	UPROPERTY(EditAnywhere, Category="Combat FX")
+	UParticleSystem* DeathParticles;
+	UPROPERTY(EditAnywhere, Category="Combat FX")
+	UParticleSystem* HitParticles;
+	UPROPERTY(EditAnywhere, Category="Combat FX")
+	USoundBase* DeathSound;
+	UPROPERTY(EditAnywhere, Category="Combat FX")
+	USoundBase* HitSound;
+
+	class UHealthComponent* HealthComponent;
 };
 

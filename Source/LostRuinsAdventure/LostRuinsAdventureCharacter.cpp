@@ -9,6 +9,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "HealthComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -64,6 +66,32 @@ void ALostRuinsAdventureCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+
+	HealthComponent = FindComponentByClass<UHealthComponent>();
+
+	if (HealthComponent)
+	{
+		HealthComponent->OnHealthChanged.AddDynamic(this, &ALostRuinsAdventureCharacter::ALostRuinsAdventureCharacter::OnPlayerHealthChanged);
+		HealthComponent->OnActorDied.AddDynamic(this, &ALostRuinsAdventureCharacter::HandleDeath);
+	}
+}
+
+void ALostRuinsAdventureCharacter::HandleHitFX()
+{
+	if (HitParticles)
+		UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, GetActorLocation(), GetActorRotation());
+
+	if (HitSound)
+		UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation(), 0.8f);
+}
+
+void ALostRuinsAdventureCharacter::HandleDeath()
+{
+	if (DeathParticles)
+		UGameplayStatics::SpawnEmitterAtLocation(this, DeathParticles, GetActorLocation(), GetActorRotation());
+	
+	if (DeathSound)
+		UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
 }
 
 //////////////////////////////////////////////////////////////////////////
