@@ -7,7 +7,6 @@
 #include "InputActionValue.h"
 #include "LostRuinsAdventureCharacter.generated.h"
 
-
 UCLASS(config=Game)
 class ALostRuinsAdventureCharacter : public ACharacter
 {
@@ -36,7 +35,7 @@ class ALostRuinsAdventureCharacter : public ACharacter
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	class UInputAction* LookAction;
-
+	
 public:
 	ALostRuinsAdventureCharacter();
 
@@ -65,6 +64,8 @@ public:
 protected:
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnPlayerHealthChanged();
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnArtifactAdded(int32 Artifact);
 
 	UFUNCTION(BlueprintCallable)
 	void HandleHitFX();
@@ -84,5 +85,6 @@ private:
 	USoundBase* HitSound;
 
 	class UHealthComponent* HealthComponent;
+	class UArtifactCollector* ArtifactCollector;
 };
 

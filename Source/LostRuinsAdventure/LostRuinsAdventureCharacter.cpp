@@ -1,6 +1,8 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "LostRuinsAdventureCharacter.h"
+
+#include "ArtifactCollector.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
@@ -71,9 +73,17 @@ void ALostRuinsAdventureCharacter::BeginPlay()
 
 	if (HealthComponent)
 	{
-		HealthComponent->OnHealthChanged.AddDynamic(this, &ALostRuinsAdventureCharacter::ALostRuinsAdventureCharacter::OnPlayerHealthChanged);
+		HealthComponent->OnHealthChanged.AddDynamic(this, &ALostRuinsAdventureCharacter::OnPlayerHealthChanged);
 		HealthComponent->OnActorDied.AddDynamic(this, &ALostRuinsAdventureCharacter::HandleDeath);
 	}
+
+	ArtifactCollector = FindComponentByClass<UArtifactCollector>();
+
+	if (ArtifactCollector)
+	{
+		ArtifactCollector->OnArtifactAdded.AddDynamic(this, &ALostRuinsAdventureCharacter::OnArtifactAdded);
+	}
+	
 }
 
 void ALostRuinsAdventureCharacter::HandleHitFX()
