@@ -3,14 +3,15 @@
 
 #include "LostRuinsAIController.h"
 
+#include "BehaviorTree/BlackboardComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 void ALostRuinsAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
+	if (AIBehavior)
+		RunBehaviorTree(AIBehavior);
 
-	SetFocus(PlayerPawn);
-	MoveTo(PlayerPawn);
+	GetBlackboardComponent()->SetValueAsVector(TEXT("StartLocation"), GetPawn()->GetActorLocation());
 }

@@ -16,7 +16,6 @@ UArtifactCollector::UArtifactCollector()
 void UArtifactCollector::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 
@@ -24,7 +23,6 @@ void UArtifactCollector::BeginPlay()
 void UArtifactCollector::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	
 }
 
 void UArtifactCollector::AddArtifact(AActor* Artifact)

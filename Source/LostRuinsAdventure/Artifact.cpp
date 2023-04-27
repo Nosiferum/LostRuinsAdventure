@@ -35,7 +35,6 @@ void AArtifact::TakeArtifact(class UPrimitiveComponent* OverlappedComp, class AA
 		ArtifactCollector->AddArtifact(this);
 		Destroy();
 	}
-	
 }
 
 // Called every frame
