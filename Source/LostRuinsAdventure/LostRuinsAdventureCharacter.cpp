@@ -12,6 +12,8 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "HealthComponent.h"
+#include "LostRuinsAdventureGameMode.h"
+#include "LostRuinsPlayerController.h"
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -84,7 +86,8 @@ void ALostRuinsAdventureCharacter::BeginPlay()
 	{
 		ArtifactCollector->OnArtifactAdded.AddDynamic(this, &ALostRuinsAdventureCharacter::OnArtifactAdded);
 	}
-	
+
+	LostRuinsPlayerController = Cast<ALostRuinsPlayerController>(GetWorld()->GetFirstPlayerController());
 }
 
 void ALostRuinsAdventureCharacter::HandleHitFX()
@@ -96,6 +99,19 @@ void ALostRuinsAdventureCharacter::HandleHitFX()
 		UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation(), 0.8f);
 }
 
+void ALostRuinsAdventureCharacter::HandleWin()
+{
+	LostRuinsPlayerController->GameHasEnded(LostRuinsPlayerController->GetPawn(),true);
+
+	UCharacterMovementComponent* MovementComponent = GetCharacterMovement();
+
+	if (MovementComponent)
+		MovementComponent->StopMovementImmediately();
+	
+	DetachFromControllerPendingDestroy();
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
 void ALostRuinsAdventureCharacter::HandleDeath()
 {
 	if (DeathParticles)
@@ -103,28 +119,12 @@ void ALostRuinsAdventureCharacter::HandleDeath()
 	
 	if (DeathSound)
 		UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
+
+	LostRuinsPlayerController->GameHasEnded(LostRuinsPlayerController->GetPawn(),false);
+	
+	DetachFromControllerPendingDestroy();
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
-
-/*void ALostRuinsAdventureCharacter::GameHasEnded(bool bIsWinner)
-{
-	if (bIsWinner)
-	{
-		UUserWidget* WinScreen = CreateWidget(this, WinScreenClass);
-
-		if (WinScreen)
-			WinScreen->AddToViewport();
-	}
-
-	else
-	{
-		UUserWidget* LoseScreen = CreateWidget(this, LoseScreenClass);
-
-		if (LoseScreen)
-			LoseScreen->AddToViewport();
-	}
-	
-	
-}*/
 
 //////////////////////////////////////////////////////////////////////////
 // Input

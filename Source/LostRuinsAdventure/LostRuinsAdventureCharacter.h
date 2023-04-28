@@ -70,18 +70,14 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void HandleHitFX();
+	UFUNCTION(BlueprintCallable)
+	void HandleWin();
+
 private:
 	UFUNCTION()
 	void HandleDeath();
-	//void GameHasEnded();
 
 private:
-	UPROPERTY(EditAnywhere, Category="End Game")
-	float RestartDelay = 5.f;
-	UPROPERTY(EditAnywhere, Category="End Game")
-	TSubclassOf<UUserWidget> LoseScreenClass;
-	UPROPERTY(EditAnywhere, Category="End Game")
-	TSubclassOf<UUserWidget> WinScreenClass;
 	UPROPERTY(EditAnywhere, Category="Combat FX")
 	UParticleSystem* DeathParticles;
 	UPROPERTY(EditAnywhere, Category="Combat FX")
@@ -90,11 +86,10 @@ private:
 	USoundBase* DeathSound;
 	UPROPERTY(EditAnywhere, Category="Combat FX")
 	USoundBase* HitSound;
-
-	FTimerHandle RestartTimer;
 	
 	class UHealthComponent* HealthComponent;
 	class UArtifactCollector* ArtifactCollector;
+	class ALostRuinsPlayerController* LostRuinsPlayerController;
 
 	
 };

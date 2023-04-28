@@ -1,6 +1,8 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "LostRuinsAdventureGameMode.h"
+
+#include "EngineUtils.h"
 #include "LostRuinsAdventureCharacter.h"
 #include "UObject/ConstructorHelpers.h"
 
