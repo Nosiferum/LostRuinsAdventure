@@ -30,5 +30,6 @@ public:
 	void AddArtifact(class AActor* Artifact);
 
 public:
+	UPROPERTY(BlueprintReadWrite)
 	TArray<AActor*> ArtifactList = TArray<AActor*>();
 };

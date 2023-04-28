@@ -33,6 +33,8 @@ protected:
 private:
 	UPROPERTY(EditAnywhere)
 	float Damage = 20.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess="true"))
+	TArray<AActor*> PatrolPoints;
 	
 	class ALostRuinsAdventureCharacter* PlayerCharacter;
 	UCapsuleComponent* CapsuleComponent;

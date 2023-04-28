@@ -12,6 +12,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "HealthComponent.h"
+#include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -103,6 +104,27 @@ void ALostRuinsAdventureCharacter::HandleDeath()
 	if (DeathSound)
 		UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation());
 }
+
+/*void ALostRuinsAdventureCharacter::GameHasEnded(bool bIsWinner)
+{
+	if (bIsWinner)
+	{
+		UUserWidget* WinScreen = CreateWidget(this, WinScreenClass);
+
+		if (WinScreen)
+			WinScreen->AddToViewport();
+	}
+
+	else
+	{
+		UUserWidget* LoseScreen = CreateWidget(this, LoseScreenClass);
+
+		if (LoseScreen)
+			LoseScreen->AddToViewport();
+	}
+	
+	
+}*/
 
 //////////////////////////////////////////////////////////////////////////
 // Input
